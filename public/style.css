@@ -7,4 +7,275 @@
   
   body {
     height: 100vh;
+    background-image: url("pawel-czerwinski-bX9B9c-YasY-unsplash.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    }
+
+  #header {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    grid-row: 1;
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(4, 4, 5);
+    grid-column: 1 / -1;
+    padding: 8px;
+    text-align: center;
+    color: white;
   }
+
+  #postsbutton{
+    color: white;
+    background-color:rgb(4, 4, 5);
+    font-size: x-large;
+    font-weight: 900;
+    font-family: "caxton";
+    }
+
+#postsbutton:hover{
+    color: lightblue
+    }
+    
+#mymessagesbutton {
+    color: white;
+    background-color:rgb(4, 4, 5);
+    font-size: x-large;
+    font-weight: 900;
+    font-family: "caxton";
+    }
+    
+#mymessagesbutton:hover {
+    color: lightblue
+    }
+
+#logoutbutton{
+    color: white;
+    background-color:rgb(4, 4, 5);
+    font-size: x-large;
+    font-weight: 900;
+    font-family: "caxton";
+    }
+
+#logoutbutton:hover{
+    color: lightblue
+    }
+
+
+  
+  #title {
+    font-family: "caxton";
+    font-weight: bold;
+    color: darkred;
+    font-size: 3.7rem;
+  }
+  #login {
+
+ 
+    
+    width: 500px;
+    height: 300px;
+    border: 5px solid darkred;
+    box-shadow: 5px 5px black;
+    margin-top: 50px;
+    margin-left: 450px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-size: larger;
+    
+  }
+
+  #register {
+    
+    width: 500px;
+    height: 200px;
+    border: 5px solid darkred;
+    box-shadow: 5px 5px black;
+    margin-top: 50px;
+    margin-left: 450px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-size: larger;
+    
+  }
+  
+  #enterusername {
+    width: 350px;
+    border: 2px solid black;
+    font-size: large;
+  }
+
+  #enterpassword {
+    width: 350px;
+    border: 2px solid black;
+    font-size: large;
+}
+
+  #registerButton {
+    width: 350px;
+   font-size : x-large;
+   background-color: darkred;
+    color: white;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    border: 2px solid black;
+  }
+
+  #loginButton {
+    width: 350px;
+    font-size : x-large;
+    background-color: darkred;
+    color: white;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    border: 2px solid black;
+  }
+
+#loginTitle {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width: 200px;
+    font-size: larger;
+    font-weight: 900;
+    border: 3px solid black;
+    background-color: darkred;
+    color: white;
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+}
+
+#loginRegister {
+    color: white;
+    margin-bottom: 30px;
+}
+
+#registerTitle {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    width: 200px;
+    font-size: larger;
+    font-weight: 900;
+    border: 3px solid black;
+    background-color: darkred;
+    color: white;
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+
+}
+#registerlink{
+    color: white;
+    margin-bottom: 30px;
+}
+#registerlink:hover{
+    color: lightblue
+}
+
+.usernamevalid {
+    display: none;
+}
+
+.usernameinvalid {
+    color: white;
+    font-size: large;
+    font-weight: bolder;
+}
+.passwordvalid {
+    display: none;
+}
+
+.passwordinvalid {
+    color: white;
+    font-size: large;
+    font-weight: bolder;
+}
+
+.userdoesnotexist {
+    display: none
+}
+
+.userexists {
+    color: white;
+    font-size: large;
+    font-weight: bolder;
+}
+
+#loginlink{
+    color: white;
+}
+
+.usernameexists {
+    display: none
+}
+
+.usernamedoesnotexist {
+    color: white;
+    font-size: large;
+    font-weight: bolder;
+}
+
+#welcome{
+    width: 500px;
+    height: 300px;
+    border: 5px solid darkred;
+    box-shadow: 5px 5px black;
+    margin-top: 50px;
+    margin-left: 450px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: larger;
+    color: white;
+    font-size: 2rem;
+
+}
+
+#postcard {
+    
+    display: inline-block;
+    flex-direction: column;
+    
+
+    box-shadow: 5px black;
+    background-color: lightblue;
+    margin-top: 50px;
+   
+    
+    color: white;
+}
+#innercard {
+    display: inline-block;
+    
+    background-color: yellow;
+    border: 5px solid darkred;
+    font-family: 'caxton';
+    font-weight: 600;
+    font-size: x-large;
+    border-radius: 4px;
+    box-shadow: 5px 5px black;
+    color: black;
+    padding: 20px 150px 20px 150px;
+    
+}
+#card{
+    display:flex;
+    flex-wrap: wrap;
+    
+    justify-content: center;
+    align-items: center;
+
+}
