@@ -7,9 +7,11 @@ import {fetchPosts} from "../api/api.js"
 
 const Posts = (props) => {
 
-const {posts, myPosts } = props
+const {posts, myPosts, setSelectPost } = props
 
 const [searchstring, setSearchstring] = useState ("")
+
+const navigate = useNavigate()
 
 
 
@@ -25,9 +27,16 @@ const handleSearch = (event) => {
     setSearchstring(newValue);
 
     console.log (searchstring)
+
+
 }
 
 
+function handleSendMessageClick(post){
+    setSelectPost(post);
+    navigate ("/mymessages/sendmessage")
+
+}
 
 
 
@@ -77,7 +86,8 @@ return (
         <div> Will Deliver? {post.willDeliver}</div>
         {post.isAuthor===true?  <div className="deleteeditdiv"><button className="deletepost"> DELETE POST</button>
         <button className="editpost"> EDIT POST</button></div>
-         : <div className= "sendmessagediv"><button className ="sendamessage"> Send Message </button></div>
+         : <div className= "sendmessagediv"><button className ="sendamessage"
+         onClick={() => handleSendMessageClick(post)} > Send Message </button></div>
         }
          </div> 
         </div>

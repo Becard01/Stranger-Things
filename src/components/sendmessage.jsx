@@ -7,7 +7,7 @@ import { addMessage } from "../api/api.js"
 
 
 
-const Sendmessage = ({tokenNumber}) => {
+const Sendmessage = ({tokenNumber, selectpost}) => {
 
 const [message, setMessage] = useState ("");
 
@@ -29,7 +29,7 @@ event.preventDefault();
 const post = {message: message}
 
 try{
-const data = await addMessage(tokenNumber, post)
+const data = await addMessage(tokenNumber, post, selectpost)
 console.log ("token", tokenNumber)
 console.log (data)
 
@@ -43,10 +43,30 @@ catch (error) {
     
 
 return (
-        <div id="addmessagecontainer">
+
+    
+           <>
+       <div id= "card" key = {selectpost._id}>   
+          
+       <div id="postcard">  
+       <div id="innercard">
+       <div> Title: {selectpost.title}</div>
+       <div> Description: {selectpost.description}</div>
+       <div> Price: {selectpost.price}</div>
+       <div> Location: {selectpost.location}</div>
+       <div> Will Deliver? {selectpost.willDeliver}</div>
+      
+        </div> 
+       </div>
+       
+       </div>
+    
+       
+
+<div id="addmessagecontainer">
         <div id="addmessage">
 
-            <>
+            
            <form id="submitPost" onSubmit={async (event) => {
            handleSubmit(event)
             }}>
@@ -69,10 +89,10 @@ return (
        <button id="sendMessageButton">Submit</button>
          </form>
 
-         </>
-        </div>
-        </div>
          
+        </div>
+        </div>
+        </>
        )
 
 

@@ -16,10 +16,10 @@ import { Messages } from "./components/messages.jsx";
 import { Sendmessage } from  "./components/sendmessage.jsx";
 import { Success } from "./components/successfulreg.jsx";
 import { Myposts } from "./components/myposts.jsx"
+import { Edit } from "./components/edit.jsx"
 
 function App() {
 
-   // const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [usernameString, setUsernameString] = useState("","");
     const [passwordString, setPasswordString] = useState ("","");
     const [userExists, setUserExists] = useState (false)
@@ -28,6 +28,7 @@ function App() {
     const [messages, setMessages]= useState ([])
     const [messagesToMe, setMessagesToMe]= useState ([])
     const [messagesFromMe, setMessagesFromMe]= useState ([])
+    const [selectpost, setSelectPost]= useState ([])
   
 
     const [tokenNumber, setTokenNumber] = useState (
@@ -106,17 +107,24 @@ useEffect(() => {
 
        <Route path="/successfulreg" element={<Success usernameString = {usernameString}/>}/>
 
-       <Route path="posts/add" element={<Add tokenNumber = {tokenNumber}
-       setPosts = {setPosts} setMyPosts ={setMyPosts} myPosts = {myPosts} />}/>
+       <Route path="/posts/add" element={<Add tokenNumber = {tokenNumber}
+       setPosts = {setPosts} setMyPosts ={setMyPosts} myPosts = {myPosts} 
+       usernameString = {usernameString} setPosts = {setPosts}/>}/>
 
+      <Route path="/myposts/edit" element={<Edit tokenNumber = {tokenNumber}
+       setPosts = {setPosts} setMyPosts ={setMyPosts} myPosts = {myPosts}  
+       selectpost = {selectpost} posts = {posts} usernameString = {usernameString} />}/> 
+    
       <Route path="/myposts" element={<Myposts posts = {posts} setPosts = {setPosts} 
-        myPosts = {myPosts}/>}/>
+        myPosts = {myPosts} tokenNumber = {tokenNumber} setSelectPost= {setSelectPost}/>}/>
+
 
 
        <Route path="/posts" element={<Posts posts = {posts} setPosts = {setPosts} 
-        myPosts = {myPosts}/>}/>
+        myPosts = {myPosts} setSelectPost= {setSelectPost}/>}/>
 
-       <Route path="mymessages/sendmessage" element={<Sendmessage tokenNumber = {tokenNumber} />}/>
+       <Route path="mymessages/sendmessage" element={<Sendmessage tokenNumber = {tokenNumber} 
+       selectpost = {selectpost} />}/>
 
        <Route path="/mymessages" element={<Messages messages = {messages} setMessages = {setMessages} 
         setMessagesToMe = {setMessagesToMe} setMessagesFromMe = {setMessagesFromMe} 

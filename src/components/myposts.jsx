@@ -1,15 +1,28 @@
 import React, { useState, useEffect } from "react";
 import {Link, useNavigate} from "react-router-dom";
-import {fetchPosts} from "../api/api.js"
+import {handleEditClick} from "./edit"
+
 
 
 
 
 const Myposts = (props) => {
 
-const {posts, myPosts } = props
+const {posts, myPosts, tokenNumber, setSelectPost } = props
 
 const [mypostsearchstring, setMyPostSearchstring] = useState ("")
+
+const [edititem, setEditItem] = useState ("");
+const [editdescription, setEditDescription] = useState ("");
+const [editprice, setEditPrice] = useState ("");
+const [editlocation, setEditLocation] = useState ("");
+const [editwilldeliver, setEditWilldeliver] = useState (false);
+
+const navigate = useNavigate()
+
+
+
+
 
 
 const handleSearch = (event) => {
@@ -21,7 +34,12 @@ const handleSearch = (event) => {
     console.log (mypostsearchstring)
 }
 
+function handleEditClick(post){
+    setSelectPost (post)
+    navigate ("./edit")
 
+
+}
 
 
 
@@ -66,7 +84,7 @@ return (
         <div> Location {post.location}</div>
         <div> Will Deliver? {post.willDeliver}</div>
         <div className="deleteeditdiv"><button className="deletepost"> DELETE POST</button>
-        <button className="editpost"> EDIT POST</button></div>
+        <button className="editpost" onClick={()=> handleEditClick(post)}> EDIT POST</button></div>
         
         </div> 
         </div>

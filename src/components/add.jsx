@@ -1,19 +1,22 @@
 import React, { useState } from "react";
 import {Link, useNavigate} from "react-router-dom";
 import { addPost } from "../api/api.js"
+import { fetchPosts } from "../api/api.js";
 
 
 
 
 
 
-const Add = ({tokenNumber}) => {
+const Add = ({tokenNumber, usernameString, setPosts}) => {
 
 const [item, setItem] = useState ("");
 const [description, setDescription] = useState ("");
 const [price, setPrice] = useState ("");
 const [location, setLocation] = useState ("");
 const [willdeliver, setWilldeliver] = useState (false);
+
+const navigate = useNavigate()
 
 const handleSetItem = (event) => {
     event.preventDefault();
@@ -70,6 +73,37 @@ try{
 const data = await addPost(tokenNumber, post)
 console.log ("token", tokenNumber)
 console.log (data)
+
+
+const getPosts = async () => {
+    try {
+          
+          const results = await fetchPosts(tokenNumber)
+          console.log (results)
+          setPosts(results);
+          results.data.posts.map(array => {
+            console.log (array.isAuthor)
+            if (array.author.username===usernameString){
+             return console.log ("myArray", array)
+             }
+        
+          })
+          navigate ("/myposts")
+        }
+      catch (error) {
+        console.error(error);
+    
+      }
+    
+    }
+
+    getPosts()
+
+
+
+
+
+
 
 }
 catch (error) {

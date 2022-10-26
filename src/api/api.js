@@ -128,6 +128,29 @@ const data = await response.json();
       }
 
 
+      export async function editPost (tokenNumber, newMessage, postID){
+        try{
+          console.log ("newMessage", newMessage)
+        const response = await fetch(`${baseURL}/posts/${postID}`, {
+          method: "PATCH",
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${tokenNumber}`
+          },
+          body: JSON.stringify(
+           {post: newMessage})
+          });
+        
+    const data = await response.json();
+        return data;
+      }
+        catch(error) {
+          console.error ("There was an error")
+        }
+      
+        }
+
+
     
     export async function fetchMessages (tokenNumber){
       try{

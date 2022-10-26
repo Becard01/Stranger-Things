@@ -46,27 +46,24 @@ const getMessages = async () => {
         <button id="sendmessagelink"> <Link to="/mymessages/sendmessage" 
         id="sendmessagelink">Send A Message</Link></button>
 
-      {//posts.data.posts.map((post) => {
+      {messages.data.messages.map((message) => {
     
-       // return (
+        return (
             
-      //   <div id= "card" key = {post._id}>   
-       //     <>
-     //   <div id="postcard">  
-     //   <div id="innercard">
-     //   <div> Title: {post.title}</div>
-     //   <div> Description: {post.description}</div>
-     //   <div> Price: {post.price}</div>
-     //   <div> Location {post.location}</div>
-     //   <div> Will Deliver? {post.willDeliver}</div>
+         <div className= "card" key = {message._id}>   
+            <>
+        <div id="messagecard">  
+        <div id="messagecard">
+        <div> Title: {message.message}</div>
+       
 
-     //   </div> 
-     //   </div>
-     //   </>
-     //  </div>
+        </div> 
+        </div>
+        </>
+       </div>
 
-      //  )
-   // } )
+        )
+    } )
       }
 
         <div id="messageheadercontainer">
