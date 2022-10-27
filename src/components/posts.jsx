@@ -1,17 +1,33 @@
 import React, { useState, useEffect } from "react";
 import {Link, useNavigate} from "react-router-dom";
-import {fetchPosts} from "../api/api.js"
+import {fetchMessages} from "../api/api.js"
 
 
 
 
 const Posts = (props) => {
 
-const {posts, myPosts, setSelectPost } = props
+const {posts, myPosts, setSelectPost, tokenNumber, setMessages} = props
 
 const [searchstring, setSearchstring] = useState ("")
 
 const navigate = useNavigate()
+
+
+const getMessages = async () => {
+    try {
+          
+          const results = await fetchMessages(tokenNumber)
+          console.log (results)
+          setMessages(results);
+         }
+      catch (error) {
+        console.error(error);
+    
+      }
+    
+    }
+getMessages()
 
 
 

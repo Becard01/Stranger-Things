@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import {BrowserRouter, Route, Link, useNavigate} from "react-router-dom";
-import { loginUser, fetchPosts } from "../api/api.js"
+import { loginUser, fetchPosts, fetchMessages} from "../api/api.js"
 
 const Login = (props) => {
 
     const {setUsernameString, setPasswordString, usernameString,
     passwordString, setHasToken, setTokenNumber, setPosts, myPosts, setMyPosts,
-    tokenNumber} = props
+    tokenNumber, setMessages} = props
 
     const navigate = useNavigate();
     
@@ -87,6 +87,21 @@ const Login = (props) => {
             }
         
             getPosts()
+
+            const getMessages = async () => {
+                try {
+                      
+                      const results = await fetchMessages(tokenNumber)
+                      console.log (results)
+                      setMessages(results);
+                     }
+                  catch (error) {
+                    console.error(error);
+                
+                  }
+                
+                }
+            getMessages()    
 
 
 

@@ -105,17 +105,17 @@ const data = await response.json();
     }
 
 
-    export async function addMessage (tokenNumber, newMessage){
+    export async function addMessage (tokenNumber, newMessage, selectpostID){
       try{
-        console.log ("newMessage", newMessage)
-      const response = await fetch(`${baseURL}/posts/  /messages`, {
+        console.log ("newMessage", newMessage, "postID", selectpostID)
+      const response = await fetch(`${baseURL}/posts/${selectpostID}/messages`, {
         method: "POST",
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${tokenNumber}`
         },
         body: JSON.stringify(
-         {post: newMessage})
+         {message: newMessage})
         });
       
   const data = await response.json();
@@ -128,9 +128,10 @@ const data = await response.json();
       }
 
 
-      export async function editPost (tokenNumber, newMessage, postID){
+      export async function editPost (tokenNumber, editedPost, postID){
         try{
-          console.log ("newMessage", newMessage)
+          console.log ("editedPost", editedPost)
+          
         const response = await fetch(`${baseURL}/posts/${postID}`, {
           method: "PATCH",
           headers: {
@@ -138,7 +139,7 @@ const data = await response.json();
             'Authorization': `Bearer ${tokenNumber}`
           },
           body: JSON.stringify(
-           {post: newMessage})
+           {post: editedPost})
           });
         
     const data = await response.json();

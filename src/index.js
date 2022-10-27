@@ -10,7 +10,7 @@ import { Login } from "./components/login.jsx";
 import { Registration } from "./components/registration.jsx";
 import { Welcome } from "./components/welcome.jsx";
 import { Posts } from "./components/posts.jsx";
-import { fetchPosts } from "./api/api.js";
+import { fetchMessages } from "./api/api.js";
 import { Add } from "./components/add.jsx";
 import { Messages } from "./components/messages.jsx";
 import { Sendmessage } from  "./components/sendmessage.jsx";
@@ -29,6 +29,7 @@ function App() {
     const [messagesToMe, setMessagesToMe]= useState ([])
     const [messagesFromMe, setMessagesFromMe]= useState ([])
     const [selectpost, setSelectPost]= useState ([])
+    
   
 
     const [tokenNumber, setTokenNumber] = useState (
@@ -41,33 +42,12 @@ function App() {
 useEffect(() =>{
 setPosts([])
 
-//const getPosts = async () => {
-//try {
- //     const results = await fetchPosts();
- //     console.log (results)
- //     setPosts(results);
- //     results.data.posts.map(array => {
- //       console.log (array.isAuthor)
- //       if (array.isAuthor===true){
- //        console.log ("myArray", array)
- //        return setMyPosts(myPosts.push(array))
- //       }
- //       else{return null}
- //     })
-      
- // }
- // catch (error) {
- //   console.error(error);
 
- // }
-
-//}
-//getPosts()
 }, []); 
 
 
 useEffect(() => {
-    window.localStorage.setItem("token", tokenNumber)
+    window.localStorage.setItem("tokenNumber", tokenNumber)
   
   }, []);
     
@@ -94,7 +74,7 @@ useEffect(() => {
         usernameString = {usernameString} passwordString = {passwordString}
         setHasToken = {setHasToken} setTokenNumber = {setTokenNumber}
         setPosts = {setPosts} setMyPosts ={setMyPosts} myPosts = {myPosts} 
-        tokenNumber = {tokenNumber}/>}/>
+        tokenNumber = {tokenNumber} setMessages = {setMessages}/>}/>
         
         <Route path="/registration" element={<Registration setUsernameString = {setUsernameString} 
         setPasswordString = {setPasswordString} setUserExists = {setUserExists} 
@@ -121,14 +101,16 @@ useEffect(() => {
 
 
        <Route path="/posts" element={<Posts posts = {posts} setPosts = {setPosts} 
-        myPosts = {myPosts} setSelectPost= {setSelectPost}/>}/>
+        myPosts = {myPosts} setSelectPost= {setSelectPost} tokenNumber= {tokenNumber}
+        setMessages = {setMessages}/>}/>
 
        <Route path="mymessages/sendmessage" element={<Sendmessage tokenNumber = {tokenNumber} 
-       selectpost = {selectpost} />}/>
+       selectpost = {selectpost} setPosts ={setPosts} usernameString = {usernameString}/>}/>
 
        <Route path="/mymessages" element={<Messages messages = {messages} setMessages = {setMessages} 
         setMessagesToMe = {setMessagesToMe} setMessagesFromMe = {setMessagesFromMe} 
-        tokenNumber= {tokenNumber}/>}/> 
+        tokenNumber= {tokenNumber} usernameString={usernameString} setSelectPost = {setSelectPost}
+        />}/> 
         
         </Routes>
 

@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import {Link, useNavigate} from "react-router-dom";
 import { addMessage } from "../api/api.js"
+import { fetchPosts } from "../api/api.js";
 
 
 
 
 
 
-const Sendmessage = ({tokenNumber, selectpost}) => {
+const Sendmessage = ({tokenNumber, selectpost, setPosts, usernameString}) => {
 
 const [message, setMessage] = useState ("");
+
+const navigate = useNavigate()
 
 const handleSetMessage = (event) => {
     event.preventDefault();
@@ -26,12 +29,36 @@ event.preventDefault();
 
 
 
-const post = {message: message}
+const post = {content: message}
 
 try{
-const data = await addMessage(tokenNumber, post, selectpost)
-console.log ("token", tokenNumber)
+const data = await addMessage(tokenNumber, post, selectpost._id)
 console.log (data)
+
+
+const getPosts = async () => {
+    try {
+          
+          const results = await fetchPosts(tokenNumber)
+          console.log (results)
+          setPosts(results);
+          results.data.posts.map(array => {
+            console.log (array.isAuthor)
+            if (array.author.username===usernameString){
+             return console.log ("myArray", array)
+             }
+        
+          })
+          navigate ("/myposts")
+        }
+      catch (error) {
+        console.error(error);
+    
+      }
+    
+    }
+
+    getPosts()
 
 }
 catch (error) {
