@@ -16,7 +16,7 @@ const navigate= useNavigate();
         setUsernameString("");
         setPasswordString("");
         setTokenNumber("");
-        setPosts([])
+        
       
        
         

@@ -73,7 +73,7 @@ try{
 const data = await addPost(tokenNumber, post)
 console.log ("token", tokenNumber)
 console.log (data)
-getPosts()
+
 
 const getPosts = async () => {
     try {
@@ -96,7 +96,7 @@ const getPosts = async () => {
       }
     
     }
-
+    getPosts()
     
 
 
@@ -136,7 +136,7 @@ catch (error) {
            type="text" 
            placeholder="Enter: Name of item for sale" 
            value={item} 
-           autocomplete="off"
+           autoComplete="off"
            required
            onChange={handleSetItem}/>
        
@@ -158,7 +158,7 @@ catch (error) {
            type="text" 
            placeholder="Price of item" 
            value={price}
-           autocomplete="off"
+           autoComplete="off"
            required
            onChange={handleSetPrice}/>
 
@@ -168,7 +168,7 @@ catch (error) {
            type="text" 
            placeholder="Location" 
            value={location}
-           autocomplete="off"
+           autoComplete="off"
            required
            onChange={handleSetLocation}/>
 <span> Will deliver?&emsp;

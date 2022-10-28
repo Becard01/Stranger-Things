@@ -36,7 +36,7 @@ const Registration = (props) => {
               
           }
       
-          const handleSetPassword = (event) => {
+    const handleSetPassword = (event) => {
               event.preventDefault();
               setPasswordLengthOK(false)
               let passwordlength = document.getElementById("passwordlength");
@@ -51,7 +51,7 @@ const Registration = (props) => {
               passwordlength.classList.add("passwordvalid");
           }
       
-          const handleSubmit = async (event) => {
+    const handleSubmit = async (event) => {
               event.preventDefault();
               
 
@@ -97,22 +97,21 @@ const Registration = (props) => {
                 console.log (error)
                 }
             }
-        function registrationSuccess(result){
+    function registrationSuccess(result){
             navigate("/successfulreg")
             setTimeout(() => {
                 navigate("/login")
              }, "2500")
-
+            }
         
-        }
-        function registrationFailure(){
+    function registrationFailure(){
             console.log ('registration failed')
         }
+    }
 
 
-        }
 
-     return (
+return (
         <div id="register">
            <div id="registerTitle">
                Become a Member
@@ -152,13 +151,6 @@ const Registration = (props) => {
          
         </div>
        )
-
-
-
-
-
-
-
 }
 
 export { Registration };

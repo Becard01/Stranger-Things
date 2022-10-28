@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import {BrowserRouter, Route, Link, useNavigate} from "react-router-dom";
 import { loginUser, fetchPosts, fetchMessages, fetchUser} from "../api/api.js"
 
+
+
 const Login = (props) => {
 
     const {setUsernameString, setPasswordString, usernameString,
@@ -14,10 +16,8 @@ const Login = (props) => {
         event.preventDefault();
         setUsernameString("")
         let loginstatus = document.getElementById("loginstatus");
-
         const inputElement = event.target;
-            const newValue = inputElement.value;
-            
+        const newValue = inputElement.value;
         setUsernameString(newValue);
         loginstatus.classList.remove("usernamedoesnotexist");
         loginstatus.classList.add("usernameexists");
@@ -26,10 +26,8 @@ const Login = (props) => {
     const handleSetPassword = (event) => {
         event.preventDefault();
         let loginstatus = document.getElementById("loginstatus");
-
         const inputElement = event.target;
-            const newValue = inputElement.value;
-           
+        const newValue = inputElement.value;
         setPasswordString(newValue);
         loginstatus.classList.remove("usernamedoesnotexist");
         loginstatus.classList.add("usernameexists");
@@ -37,21 +35,15 @@ const Login = (props) => {
     
         
             
-        
-    
-
     const handleSubmit = async (event) => {
         event.preventDefault();
-        
         try {
             const result = await loginUser(usernameString, passwordString)
-            
             result.success? loginSuccess(result): loginFailure(result)
-
             console.log (result)
            }
             catch (error) {
-              console.log (error)
+            console.log (error)
               }
         };
 
@@ -62,11 +54,6 @@ const Login = (props) => {
         console.log ("login token", token)
         setHasToken(true)
         setTokenNumber(token)
-        window.localStorage.setItem("tokenNumber", token)
-        const item = window.localStorage.getItem("tokenNumber")
-        console.log (item)
-        
-        
         navigate("/welcome")
         
         const getUser = async () => {
@@ -80,63 +67,35 @@ const Login = (props) => {
               console.error(error);
                 }
           }
-      getUser()
+        getUser()
 
-
-
-
-
-const getPosts = async () => {
+        
+    const getPosts = async () => {
             try {
-                  
-                  const results = await fetchPosts(token)
-                  console.log (results)
-                  setPosts(results);
-                  results.data.posts.map(array => {
-                    console.log (array.isAuthor)
-                    if (array.author.username===usernameString){
-                     return console.log ("myArray", array)
-                     }
-                
-                  })
+                const results = await fetchPosts(token)
+                console.log (results)
+                setPosts(results);
                 }
               catch (error) {
                 console.error(error);
-            
-              }
-            
+                }
             }
-        
             getPosts()
-
-            
-
-
-
-
-        navigateToPost()
+            navigateToPost()
         }
         }
 
 
-
-
-
-
-
-
-     function navigateToPost (){
+    function navigateToPost (){
         
         setTimeout(() => {
             navigate("/posts")
          }, "2000")
-         
-
-     }
+         }
 
      
 
-     function loginFailure(result){
+    function loginFailure(result){
         let loginstatus = document.getElementById("loginstatus");
         if (result.error.name === "InvalidCredentials") {
             loginstatus.classList.remove("usernameexists");
@@ -144,11 +103,7 @@ const getPosts = async () => {
               }
         }
     
-
-
-    
-    
-    return (
+return (
      <div id="login">
         <div id="loginTitle">
             Member Login

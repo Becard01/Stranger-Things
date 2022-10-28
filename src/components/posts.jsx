@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {BrowserRouter, Route, Link, useNavigate} from "react-router-dom";
 import {fetchMessages, fetchPosts} from "../api/api.js";
 import { deletePost } from "../api/api.js";
-import { getPosts } from "../index"
-
-
 
 
 
@@ -14,26 +11,43 @@ const {posts, myPosts, setSelectPost, tokenNumber, setMessages, setPosts, userna
 messages} = props
 
 const [searchstring, setSearchstring] = useState ("")
+const [renderposts, setRenderposts] = useState (posts.data.posts)
+
 
 const navigate = useNavigate()
 
+//*****Added a UseEffect here for debugging purposes.  
+//"posts" was not populating after refresh, so tried to getPosts and getMessages with this*/
 
-const getMessages = async () => {
+useEffect(() =>{
+if (tokenNumber){
+    const getPosts = async () => {
+      try {
+            const results = await fetchPosts(tokenNumber)
+            console.log ("useEfect fetchPosts success Post component")
+            setPosts(results);
+        }
+        catch (error) {
+          console.error(error);
+        }
+      }
+  getPosts()
+                }
+  
+  const getMessages = async () => {
     if (!messages){
     try { if (tokenNumber){
-          
           const results = await fetchMessages(tokenNumber)
           setMessages(results);
-          await fetchPosts(tokenNumber)
          }}
       catch (error) {
         console.error(error);
-    
-      }}
+    }}
     
     }
-if (!messages) {getMessages()}
-
+  getMessages()
+  
+}, [tokenNumber]); 
 
 
 
@@ -42,10 +56,16 @@ const handleSearch = (event) => {
     const inputElement = event.target;
     const newValue = inputElement.value;
     setSearchstring(newValue);
+    const found = posts.data.posts.filter((post) =>{
+       return (post.title.toLowerCase().includes(`${searchstring}`) || 
+       post.description.toLowerCase().includes(`${searchstring}`)|| 
+       post.price.toLowerCase().includes(`${searchstring}`)|| 
+       post.location.toLowerCase().includes(`${searchstring}`))});
+       setRenderposts(found)
+        console.log ("found", found)
+    
 
     console.log (searchstring)
-
-
 }
 
 function handleSendMessageClick (post)  {
@@ -66,51 +86,19 @@ async function handleDeleteClick(postID){
           
         const results = await deletePost(tokenNumber, postID)
         console.log (results)
-       // await fetchPosts(tokenNumber)
         navigate ("/myposts")
-        //const getPosts = async () => {
-            //try {
-                  
-                //  const results = await fetchPosts(tokenNumber)
-                //  console.log (results)
-                //  setPosts(results);
-                //  results.data.posts.map(array => {
-                 //   console.log (array.isAuthor)
-                 //   if (array.author.username===usernameString){
-                  //   return console.log ("myArray", array)
-                  //   }
-                
-                  //})
-                 // navigate ("/myposts")
-              //  }
-            //  catch (error) {
-              //  console.error(error);
-            
-             // }
-            
-          //  }
-        
-           // getPosts()
-        
-
-
-
        }
     catch (error) {
       console.error(error);
-  
     }
-    
-}
+    }
 
 
 
-//console.log ("posts", posts)
-//console.log ("myposts", myPosts)
 
 
+console.log ("posts at the time of map", posts.data.posts)
 
-if (tokenNumber && posts){
 return (
     <div id="posts">
         <div id="postheadercontainer">
@@ -132,7 +120,7 @@ return (
         </div>
 
        
-      { posts? posts.data.posts.map((post) => {
+      { renderposts.map((post) => {
     
         return (
             
@@ -161,12 +149,12 @@ return (
    
     
   )
-   :null   
+  
 }
     
     </div>
 );
-}
+
 
 }
 

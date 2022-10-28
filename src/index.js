@@ -11,6 +11,7 @@ import { Registration } from "./components/registration.jsx";
 import { Welcome } from "./components/welcome.jsx";
 import { Posts } from "./components/posts.jsx";
 import { fetchPosts } from "./api/api.js";
+import { fetchMessages } from "./api/api.js";
 import { Add } from "./components/add.jsx";
 import { Messages } from "./components/messages.jsx";
 import { Sendmessage } from  "./components/sendmessage.jsx";
@@ -35,29 +36,50 @@ function App() {
       
      
     const [posts, setPosts] = useState([]);
+    
 
 
 useEffect(() =>{
-setPosts([])
 
-
-}, []); 
-
-
-useEffect(() => {
-    window.localStorage.setItem("tokenNumber", tokenNumber)
-  const item = window.localStorage.getItem("tokenNumber")
-  
-}, [tokenNumber]);
+  window.localStorage.setItem("tokenNumber", tokenNumber)
+  const getPosts = async () => {
+    try {
+          
+          const results = await fetchPosts(tokenNumber)
+          console.log ("results useEffect in Index.js fetchPosts", results)
+          setPosts(results);
+           }
+      catch (error) {
+        console.error(error);
     
+      }
+    
+    }
+getPosts()
   
-    
-    
 
+const getMessages = async () => {
   
-    
+  try { if (tokenNumber){
+        
+        const results = await fetchMessages(tokenNumber)
+        console.log ("results useEffect in Index.js fetchMessages", results)
+        setMessages(results);
+       }}
+    catch (error) {
+      console.error(error);
+  }
   
-  return (
+  }
+getMessages()
+
+
+
+
+}, [tokenNumber]); 
+
+
+return (
       
       
 
@@ -68,8 +90,16 @@ useEffect(() => {
         setTokenNumber = {setTokenNumber}  tokenNumber = {tokenNumber} setPosts = {setPosts}/> }
 
       <Routes>
-        
-        <Route path="/login" element={<Login setUsernameString = {setUsernameString} 
+
+      <Route path="/posts/add" element={<Add tokenNumber = {tokenNumber}
+       setPosts = {setPosts} setMyPosts ={setMyPosts} myPosts = {myPosts} 
+       usernameString = {usernameString} messages = {messages}/>}/>
+
+      <Route path="/posts" element={<Posts posts = {posts} setPosts = {setPosts} 
+        myPosts = {myPosts} setSelectPost= {setSelectPost} tokenNumber= {tokenNumber}
+        setMessages = {setMessages} usernameString ={usernameString}/>}/>
+
+      <Route path="/login" element={<Login setUsernameString = {setUsernameString} 
         setPasswordString = {setPasswordString}
         usernameString = {usernameString} passwordString = {passwordString}
         setHasToken = {setHasToken} setTokenNumber = {setTokenNumber}
@@ -80,17 +110,17 @@ useEffect(() => {
         setPasswordString = {setPasswordString} setUserExists = {setUserExists} 
         usernameString= {usernameString} passwordString = {passwordString} />}/>
        
-       <Route path="/" element={tokenNumber?<Navigate replace to="/posts" />:
-       <Navigate replace to="/login" />} />
-       
+       {//<Route path="/" element={tokenNumber?<Navigate replace to="/posts" />:
+       //<Navigate replace to="/login" />} />
+        }
+
+     
+
        <Route path="/welcome" element={<Welcome usernameString = {usernameString}/>}/>
 
        <Route path="/successfulreg" element={<Success usernameString = {usernameString}/>}/>
 
-       <Route path="/posts/add" element={<Add tokenNumber = {tokenNumber}
-       setPosts = {setPosts} setMyPosts ={setMyPosts} myPosts = {myPosts} 
-       usernameString = {usernameString} messages = {messages}/>}/>
-
+      
       <Route path="/myposts/edit" element={<Edit tokenNumber = {tokenNumber}
        setPosts = {setPosts} setMyPosts ={setMyPosts} myPosts = {myPosts}  
        selectpost = {selectpost} posts = {posts} usernameString = {usernameString} />}/> 
@@ -100,9 +130,7 @@ useEffect(() => {
 
 
 
-       <Route path="/posts" element={<Posts posts = {posts} setPosts = {setPosts} 
-        myPosts = {myPosts} setSelectPost= {setSelectPost} tokenNumber= {tokenNumber}
-        setMessages = {setMessages} usernameString ={usernameString}/>}/>
+       
 
        <Route path="mymessages/sendmessage" element={<Sendmessage tokenNumber = {tokenNumber} 
        selectpost = {selectpost} setPosts ={setPosts} usernameString = {usernameString}/>}/>
