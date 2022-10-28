@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {addMessage} from "../api/api.js"
 import { fetchMessages } from "../api/api.js";
-import { useGetUniqueKey } from "react-generate-unique-key-for-map";
+
 
 
 
@@ -19,7 +19,7 @@ const [selectmessageID, setSelectMessageID] = useState("")
 
 const navigate= useNavigate()
 
-const getUniqueKey = useGetUniqueKey();
+
 
 const messagesToMe = messages.data.messages.filter((msg) => {
        return (msg.fromUser.username!==usernameString)});
@@ -34,6 +34,8 @@ console.log ("messagesFromMe", messagesFromMe);
 
 function handleSendMessageClick(messageID, message){
     setReturnMessage(true)
+    
+
     setSelectedMessage(message)
     setSelectMessageID(messageID)
    // setSelectPost(post);
@@ -41,6 +43,8 @@ function handleSendMessageClick(messageID, message){
 
 const handleSetMessage = (event) => {
     event.preventDefault();
+    setMessage("")
+    
     const inputElement = event.target;
     const newValue = inputElement.value;
     setMessage(newValue);
@@ -50,6 +54,7 @@ const handleSetMessage = (event) => {
 const handleSubmit = async (event) => {
     event.preventDefault();
     setReturnMessage(false)
+
     const post = {content: message}
     
     try{
@@ -97,6 +102,7 @@ const handleSubmit = async (event) => {
            <form id="submitMessage" onSubmit={async (event) => {
            handleSubmit(event)
             }}>
+
         <div> Title: {selectedmessage.post.title}</div>
         <div> Message: {selectedmessage.content}</div>
         <div> From User: {selectedmessage.fromUser.username}</div> 
@@ -122,8 +128,8 @@ const handleSubmit = async (event) => {
 
          
         </div>
-        </div>: null
-        }
+        </div>:null}
+        
 
 
 
@@ -140,18 +146,18 @@ const handleSubmit = async (event) => {
        
       
       {
-      messagesToMe.map((messageto) => {
+      messagesToMe.map((messageto, index) => {
        
         return (
             
-         <div className= "card" key = {getUniqueKey(messageto)}> 
+         <div className= "card" key = {index}> 
         
          <div className="messagecard">
         <div> Title: {messageto.post.title}</div>
         <div> Message: {messageto.content}</div>
         <div> From User: {messageto.fromUser.username}</div>
-        <div className= "sendmessagediv"><button className ="sendamessage"
-         onClick={() => handleSendMessageClick (messageto.post._id, messageto)} > Send Message </button></div>
+        <div className= "sendmessagediv" href="#top"><button  className ="sendamessage"
+         onClick={() => handleSendMessageClick (messageto.post._id, messageto)}> Send Message </button></div>
         
         </div> 
         
@@ -176,11 +182,11 @@ const handleSubmit = async (event) => {
        
       
       {
-      messagesFromMe.map((message) => {
+      messagesFromMe.map((message,idx) => {
        
         return (
             
-         <div className= "card" key = {getUniqueKey(message)}> 
+         <div className= "card" key = {idx}> 
         
          <div className="messagecard">
         <div> Title: {message.post.title}</div>
@@ -209,7 +215,7 @@ const handleSubmit = async (event) => {
 
 </>
 
-
+    
 )
     
 }

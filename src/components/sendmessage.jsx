@@ -90,8 +90,8 @@ return (
     
        
 
-<div id="addmessagecontainer">
-        <div id="addmessage">
+<div className="addmessagecontainer">
+        <div className="addmessage">
 
             
            <form id="submitPost" onSubmit={async (event) => {

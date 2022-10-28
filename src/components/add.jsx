@@ -73,7 +73,7 @@ try{
 const data = await addPost(tokenNumber, post)
 console.log ("token", tokenNumber)
 console.log (data)
-
+getPosts()
 
 const getPosts = async () => {
     try {
@@ -97,7 +97,7 @@ const getPosts = async () => {
     
     }
 
-    getPosts()
+    
 
 
 

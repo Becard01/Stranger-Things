@@ -273,7 +273,7 @@
 }
 #card{
     display:flex;
-    flex-grow: 1;
+    
     
     justify-content: center;
     align-items: center;
@@ -420,7 +420,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 10px;
     padding: 30 px;
 
     height: 300px;
@@ -571,7 +571,7 @@
 .messagescontainer{
     display: flex;
     flex-direction: column;
-    
+    margin-top: 40px;
     align-items: left;
 }
 .messageheaderbox{
@@ -593,6 +593,20 @@
     font-size: larger;
     border: 2px solid black
 
+}
+
+.card{
+    display:flex;
+    
+    
+    justify-content: center;
+    align-items: center;
+
+}
+
+.messageheadercontainer{
+    display: flex;
+    justify-content: center;
 }
 
 

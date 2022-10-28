@@ -12,6 +12,7 @@ const [editdescription, setEditDescription] = useState (selectpost.description);
 const [editprice, setEditPrice] = useState (selectpost.price);
 const [editlocation, setEditLocation] = useState (selectpost.location);
 const [editwilldeliver, setEditWilldeliver] = useState (selectpost.willDeliver);
+const [editedPost, setEditedPost]= useState (false)
 
 
 
@@ -55,6 +56,8 @@ const navigate = useNavigate()
     
     const handleSubmit = async (event) => {
     event.preventDefault();
+
+    setEditedPost(false)
     
     if (editwilldeliver === "checked") {
         setEditWilldeliver(true)
@@ -72,6 +75,9 @@ const navigate = useNavigate()
     try{
     const data = await editPost(tokenNumber, editedpost, selectpost._id)
     
+    if (data.success){
+        setEditedPost(true)
+    }
     console.log ("editeddata", data)
     console.log ("is this an array?", posts)
 
@@ -87,19 +93,14 @@ const navigate = useNavigate()
 //  console.log ("newArray", newArray)
  //  setPosts(newArray);
    console.log ("posts", posts)
+   
    const getPosts = async () => {
     try {
           
           const results = await fetchPosts(tokenNumber)
           console.log (results)
           setPosts(results);
-          results.data.posts.map(array => {
-            console.log (array.isAuthor)
-            if (array.author.username===usernameString){
-             return console.log ("myArray", array)
-             }
-        
-          })
+          
           navigate ("/myposts")
         }
       catch (error) {
@@ -108,8 +109,8 @@ const navigate = useNavigate()
       }
     
     }
-
-    getPosts()
+getPosts()
+    
 
 
 

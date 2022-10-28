@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import {BrowserRouter, Route, Link, useNavigate} from "react-router-dom";
-import { loginUser, fetchPosts, fetchMessages} from "../api/api.js"
+import { loginUser, fetchPosts, fetchMessages, fetchUser} from "../api/api.js"
 
 const Login = (props) => {
 
     const {setUsernameString, setPasswordString, usernameString,
     passwordString, setHasToken, setTokenNumber, setPosts, myPosts, setMyPosts,
-    tokenNumber, setMessages} = props
+    tokenNumber, setMessages, setUserExists} = props
 
     const navigate = useNavigate();
     
@@ -59,13 +59,34 @@ const Login = (props) => {
         const token = result.data.token
         console.log ("token at time of login", token)
         if (token) {
-        
+        console.log ("login token", token)
         setHasToken(true)
         setTokenNumber(token)
+        window.localStorage.setItem("tokenNumber", token)
+        const item = window.localStorage.getItem("tokenNumber")
+        console.log (item)
+        
+        
         navigate("/welcome")
+        
+        const getUser = async () => {
+            try {
+                  
+                const results = await fetchUser(token)
+                console.log ("fetch User", results)
+                setUserExists(results);
+               }
+            catch (error) {
+              console.error(error);
+                }
+          }
+      getUser()
 
 
-        const getPosts = async () => {
+
+
+
+const getPosts = async () => {
             try {
                   
                   const results = await fetchPosts(token)
@@ -88,20 +109,7 @@ const Login = (props) => {
         
             getPosts()
 
-            const getMessages = async () => {
-                try {
-                      
-                      const results = await fetchMessages(tokenNumber)
-                      console.log (results)
-                      setMessages(results);
-                     }
-                  catch (error) {
-                    console.error(error);
-                
-                  }
-                
-                }
-            getMessages()    
+            
 
 
 
@@ -109,6 +117,14 @@ const Login = (props) => {
         navigateToPost()
         }
         }
+
+
+
+
+
+
+
+
      function navigateToPost (){
         
         setTimeout(() => {

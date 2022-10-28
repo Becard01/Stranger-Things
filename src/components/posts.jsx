@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
 import {Link, useNavigate} from "react-router-dom";
-import {fetchMessages} from "../api/api.js"
+import {fetchMessages, fetchPosts} from "../api/api.js";
+import { deletePost } from "../api/api.js";
+import { getPosts } from "../index"
+
 
 
 
 
 const Posts = (props) => {
 
-const {posts, myPosts, setSelectPost, tokenNumber, setMessages} = props
+const {posts, myPosts, setSelectPost, tokenNumber, setMessages, setPosts, usernameString,
+messages} = props
 
 const [searchstring, setSearchstring] = useState ("")
 
@@ -15,25 +19,22 @@ const navigate = useNavigate()
 
 
 const getMessages = async () => {
-    try {
+    if (!messages){
+    try { if (tokenNumber){
           
           const results = await fetchMessages(tokenNumber)
-          console.log (results)
           setMessages(results);
-         }
+          await fetchPosts(tokenNumber)
+         }}
       catch (error) {
         console.error(error);
     
-      }
+      }}
     
     }
-getMessages()
+if (!messages) {getMessages()}
 
 
-
-
-
-    
 
 
 const handleSearch = (event) => {
@@ -47,25 +48,69 @@ const handleSearch = (event) => {
 
 }
 
-
-function handleSendMessageClick(post){
+function handleSendMessageClick (post)  {
     setSelectPost(post);
     navigate ("/mymessages/sendmessage")
 
 }
 
+function handleEditClick(post){
+    setSelectPost (post)
+    navigate ("/myposts")
+
+}
+
+
+async function handleDeleteClick(postID){
+    try {
+          
+        const results = await deletePost(tokenNumber, postID)
+        console.log (results)
+       // await fetchPosts(tokenNumber)
+        navigate ("/myposts")
+        //const getPosts = async () => {
+            //try {
+                  
+                //  const results = await fetchPosts(tokenNumber)
+                //  console.log (results)
+                //  setPosts(results);
+                //  results.data.posts.map(array => {
+                 //   console.log (array.isAuthor)
+                 //   if (array.author.username===usernameString){
+                  //   return console.log ("myArray", array)
+                  //   }
+                
+                  //})
+                 // navigate ("/myposts")
+              //  }
+            //  catch (error) {
+              //  console.error(error);
+            
+             // }
+            
+          //  }
+        
+           // getPosts()
+        
 
 
 
-
-console.log ("posts", posts)
-console.log ("myposts", myPosts)
-
-//const found = posts.includes(searchstring);
+       }
+    catch (error) {
+      console.error(error);
+  
+    }
     
-  //  console.log (found)
+}
 
 
+
+//console.log ("posts", posts)
+//console.log ("myposts", myPosts)
+
+
+
+if (tokenNumber && posts){
 return (
     <div id="posts">
         <div id="postheadercontainer">
@@ -86,8 +131,8 @@ return (
             </div>
         </div>
 
-
-      {posts.data.posts.map((post) => {
+       
+      { posts? posts.data.posts.map((post) => {
     
         return (
             
@@ -100,8 +145,9 @@ return (
         <div> Price: {post.price}</div>
         <div> Location {post.location}</div>
         <div> Will Deliver? {post.willDeliver}</div>
-        {post.isAuthor===true?  <div className="deleteeditdiv"><button className="deletepost"> DELETE POST</button>
-        <button className="editpost"> EDIT POST</button></div>
+        {post.isAuthor===true?  <div className="deleteeditdiv">
+        <button className="deletepost"  onClick={() => handleDeleteClick(post._id)}> DELETE POST</button>
+        <button className="editpost"onClick={()=> handleEditClick(post)}> EDIT POST</button></div>
          : <div className= "sendmessagediv"><button className ="sendamessage"
          onClick={() => handleSendMessageClick(post)} > Send Message </button></div>
         }
@@ -114,12 +160,14 @@ return (
     }
    
     
-    )
-      
-    }
+  )
+   :null   
+}
     
     </div>
 );
+}
+
 }
 
 export {Posts};

@@ -80,6 +80,30 @@ export async function registerUser (userName, passWord) {
 
   }
 
+  export async function fetchUser (tokenNumber){
+    console.log ("tokenNumber at time of fetch", tokenNumber)
+  try{
+  const response = await fetch(`${baseURL}/users/me`, {
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${tokenNumber}`
+      },
+     }
+     );
+  const data = await response.json();
+  return data;
+  }
+  catch(error) {
+    console.error ("There was an error")
+  }
+
+  }
+
+
+
+
+
+
   
   
   export async function addPost (tokenNumber, newPost){
@@ -171,5 +195,28 @@ const data = await response.json();
       }
     
       }
+
+
+      export async function deletePost (tokenNumber, postID){
+        try{
+          
+          console.log (postID)
+        const response = await fetch(`${baseURL}/posts/${postID}`, {
+          method: "DELETE",
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${tokenNumber}`
+          }
+          });
+        
+    const data = await response.json();
+        return data;
+        
+      }
+        catch(error) {
+          console.error ("There was an error")
+        }
+      
+        }
   
       

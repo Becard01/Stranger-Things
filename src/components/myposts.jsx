@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import {Link, useNavigate} from "react-router-dom";
-import {handleEditClick} from "./edit"
-
-
-
+import { fetchPosts } from "../api/api";
+import { deletePost } from "../api/api";
 
 
 const Myposts = (props) => {
 
-const {posts, myPosts, tokenNumber, setSelectPost } = props
+const {posts, myPosts, tokenNumber, setSelectPost, setPosts } = props
 
 const [mypostsearchstring, setMyPostSearchstring] = useState ("")
 
@@ -40,6 +38,25 @@ function handleEditClick(post){
 
 
 }
+
+
+async function handleDeleteClick(postID){
+    try {
+          console.log ("postID", postID)
+        const results = await deletePost(tokenNumber, postID)
+        console.log (results)
+       const data =  await fetchPosts(tokenNumber)
+       setPosts (data)
+
+        navigate ("/myposts")
+         }
+    catch (error) {
+      console.error(error);
+  
+    }
+    
+}
+
 
 
 
@@ -83,7 +100,8 @@ return (
         <div> Price: {post.price}</div>
         <div> Location {post.location}</div>
         <div> Will Deliver? {post.willDeliver}</div>
-        <div className="deleteeditdiv"><button className="deletepost"> DELETE POST</button>
+        <div className="deleteeditdiv"><button className="deletepost"
+        onClick={()=> handleDeleteClick(post._id)}> DELETE POST</button>
         <button className="editpost" onClick={()=> handleEditClick(post)}> EDIT POST</button></div>
         
         </div> 

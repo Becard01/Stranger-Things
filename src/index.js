@@ -10,13 +10,14 @@ import { Login } from "./components/login.jsx";
 import { Registration } from "./components/registration.jsx";
 import { Welcome } from "./components/welcome.jsx";
 import { Posts } from "./components/posts.jsx";
-import { fetchMessages } from "./api/api.js";
+import { fetchPosts } from "./api/api.js";
 import { Add } from "./components/add.jsx";
 import { Messages } from "./components/messages.jsx";
 import { Sendmessage } from  "./components/sendmessage.jsx";
 import { Success } from "./components/successfulreg.jsx";
 import { Myposts } from "./components/myposts.jsx"
 import { Edit } from "./components/edit.jsx"
+
 
 function App() {
 
@@ -29,9 +30,6 @@ function App() {
     const [messagesToMe, setMessagesToMe]= useState ([])
     const [messagesFromMe, setMessagesFromMe]= useState ([])
     const [selectpost, setSelectPost]= useState ([])
-    
-  
-
     const [tokenNumber, setTokenNumber] = useState (
       window.localStorage.getItem("tokenNumber") || "");
       
@@ -48,16 +46,18 @@ setPosts([])
 
 useEffect(() => {
     window.localStorage.setItem("tokenNumber", tokenNumber)
+  const item = window.localStorage.getItem("tokenNumber")
   
-  }, []);
+}, [tokenNumber]);
     
-
-
+  
     
     
 
   
-    return (
+    
+  
+  return (
       
       
 
@@ -74,7 +74,7 @@ useEffect(() => {
         usernameString = {usernameString} passwordString = {passwordString}
         setHasToken = {setHasToken} setTokenNumber = {setTokenNumber}
         setPosts = {setPosts} setMyPosts ={setMyPosts} myPosts = {myPosts} 
-        tokenNumber = {tokenNumber} setMessages = {setMessages}/>}/>
+        tokenNumber = {tokenNumber} setMessages = {setMessages} setUserExists= {setUserExists}/>}/>
         
         <Route path="/registration" element={<Registration setUsernameString = {setUsernameString} 
         setPasswordString = {setPasswordString} setUserExists = {setUserExists} 
@@ -89,7 +89,7 @@ useEffect(() => {
 
        <Route path="/posts/add" element={<Add tokenNumber = {tokenNumber}
        setPosts = {setPosts} setMyPosts ={setMyPosts} myPosts = {myPosts} 
-       usernameString = {usernameString} setPosts = {setPosts}/>}/>
+       usernameString = {usernameString} messages = {messages}/>}/>
 
       <Route path="/myposts/edit" element={<Edit tokenNumber = {tokenNumber}
        setPosts = {setPosts} setMyPosts ={setMyPosts} myPosts = {myPosts}  
@@ -102,7 +102,7 @@ useEffect(() => {
 
        <Route path="/posts" element={<Posts posts = {posts} setPosts = {setPosts} 
         myPosts = {myPosts} setSelectPost= {setSelectPost} tokenNumber= {tokenNumber}
-        setMessages = {setMessages}/>}/>
+        setMessages = {setMessages} usernameString ={usernameString}/>}/>
 
        <Route path="mymessages/sendmessage" element={<Sendmessage tokenNumber = {tokenNumber} 
        selectpost = {selectpost} setPosts ={setPosts} usernameString = {usernameString}/>}/>
