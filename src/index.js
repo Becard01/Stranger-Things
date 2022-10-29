@@ -18,6 +18,7 @@ import { Sendmessage } from  "./components/sendmessage.jsx";
 import { Success } from "./components/successfulreg.jsx";
 import { Myposts } from "./components/myposts.jsx"
 import { Edit } from "./components/edit.jsx"
+import { Reply } from "./components/reply.jsx"
 
 
 function App() {
@@ -31,6 +32,8 @@ function App() {
     const [messagesToMe, setMessagesToMe]= useState ([])
     const [messagesFromMe, setMessagesFromMe]= useState ([])
     const [selectpost, setSelectPost]= useState ([])
+    const [selectmessage, setSelectMessage]= useState ([])
+    const [selectmessageID, setSelectMessageID] = useState("")
     const [tokenNumber, setTokenNumber] = useState (
       window.localStorage.getItem("tokenNumber") || "");
       
@@ -129,8 +132,9 @@ return (
         myPosts = {myPosts} tokenNumber = {tokenNumber} setSelectPost= {setSelectPost}/>}/>
 
 
-
-       
+      <Route path="mymessages/reply" element={<Reply tokenNumber = {tokenNumber} 
+       selectmessage = {selectmessage} setPosts ={setPosts} usernameString = {usernameString}
+       selectmessageID = {selectmessageID} />}/>
 
        <Route path="mymessages/sendmessage" element={<Sendmessage tokenNumber = {tokenNumber} 
        selectpost = {selectpost} setPosts ={setPosts} usernameString = {usernameString}/>}/>
@@ -138,6 +142,7 @@ return (
        <Route path="/mymessages" element={<Messages messages = {messages} setMessages = {setMessages} 
         setMessagesToMe = {setMessagesToMe} setMessagesFromMe = {setMessagesFromMe} 
         tokenNumber= {tokenNumber} usernameString={usernameString} setSelectPost = {setSelectPost}
+        setSelectMessage={setSelectMessage} setSelectMessageID={setSelectMessageID}
         />}/> 
         
         </Routes>

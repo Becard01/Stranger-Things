@@ -10,12 +10,9 @@ import { fetchMessages } from "../api/api.js";
 const Messages = (props) => {
 
 const {messages, setMessages, setMessagesToMe, setMessagesFromMe, tokenNumber, usernameString, 
-setSelectPost} = props
+setSelectMessage, setSelectMessageID} = props
 
-const [returnmessage, setReturnMessage] = useState (false)
-const [message, setMessage]= useState ("")
-const [selectedmessage, setSelectedMessage]= useState("")
-const [selectmessageID, setSelectMessageID] = useState("")
+
 
 const navigate= useNavigate()
 
@@ -33,108 +30,20 @@ console.log ("messagesFromMe", messagesFromMe);
 
 
 function handleSendMessageClick(messageID, message){
-    setReturnMessage(true)
-    
-
-    setSelectedMessage(message)
+  setSelectMessage(message)
     setSelectMessageID(messageID)
-   // setSelectPost(post);
-    }
-
-const handleSetMessage = (event) => {
-    event.preventDefault();
-    setMessage("")
-    
-    const inputElement = event.target;
-    const newValue = inputElement.value;
-    setMessage(newValue);
-    }
-
-
-const handleSubmit = async (event) => {
-    event.preventDefault();
-    setReturnMessage(false)
-
-    const post = {content: message}
-    
-    try{
-    const data = await addMessage(tokenNumber, post, selectmessageID)
-    console.log (data)
-
-
-    const getMessages = async () => {
-        try {
-              
-              const results = await fetchMessages(tokenNumber)
-              console.log (results)
-              setMessages(results);
-             }
-          catch (error) {
-            console.error(error);
-        
-          }
-        
-        }
-    getMessages()
-
-
-    
-    
-    }
-    catch (error) {
-        console.log (error)
-        }
+   navigate("./reply");
     }
 
 
 
 
 
-
-    return (
+return (
      
        <>
-{returnmessage === true? 
-         <div className="addmessagecontainer">
-        <div className="addmessage">
-
-            
-           <form id="submitMessage" onSubmit={async (event) => {
-           handleSubmit(event)
-            }}>
-
-        <div> Title: {selectedmessage.post.title}</div>
-        <div> Message: {selectedmessage.content}</div>
-        <div> From User: {selectedmessage.fromUser.username}</div> 
-        <div>----</div>   
-            <div id="sendmessageTitle">
-               Reply:
-           </div>
-          <fieldset id = "inputs">
-         <label htmlFor="message"></label>
-         <textarea
-           id="entermessage" 
-           type="text" 
-           rows= "5"
-           placeholder="Enter Your Reply Here" 
-           value={message} 
-           required
-           onChange={handleSetMessage}/>
        
-        </fieldset>
-      
-       <button id="sendMessageButton">Submit</button>
-         </form>
-
-         
-        </div>
-        </div>:null}
-        
-
-
-
-
-   <div className="messagescontainer">
+        <div className="messagescontainer">
         
         <div className="messageheadercontainer">
             <div className="messageheaderbox">
