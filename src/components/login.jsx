@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import {BrowserRouter, Route, Link, useNavigate} from "react-router-dom";
-import { loginUser, fetchPosts, fetchMessages, fetchUser} from "../api/api.js"
+import React from "react";
+import {Link, useNavigate} from "react-router-dom";
+import { loginUser, fetchUser} from "../api/api.js"
 
 
 
@@ -60,7 +60,6 @@ const Login = (props) => {
             try {
                   
                 const results = await fetchUser(token)
-                console.log ("fetch User", results)
                 setUserExists(results);
                }
             catch (error) {
@@ -70,17 +69,7 @@ const Login = (props) => {
         getUser()
 
         
-    const getPosts = async () => {
-            try {
-                const results = await fetchPosts(token)
-                console.log (results)
-                setPosts(results);
-                }
-              catch (error) {
-                console.error(error);
-                }
-            }
-            getPosts()
+
             navigateToPost()
         }
         }
@@ -92,8 +81,6 @@ const Login = (props) => {
             navigate("/posts")
          }, "2000")
          }
-
-     
 
     function loginFailure(result){
         let loginstatus = document.getElementById("loginstatus");

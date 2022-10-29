@@ -59,7 +59,7 @@ export async function registerUser (userName, passWord) {
   }
 
   export async function fetchPosts (tokenNumber){
-    console.log ("tokenNumber at time of fetch", tokenNumber)
+   
   try{
   const response = await fetch(`${baseURL}/posts`, {
     headers: {
@@ -81,7 +81,7 @@ export async function registerUser (userName, passWord) {
   }
 
   export async function fetchUser (tokenNumber){
-    console.log ("tokenNumber at time of fetch", tokenNumber)
+   
   try{
   const response = await fetch(`${baseURL}/users/me`, {
     headers: {

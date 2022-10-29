@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import { editPost } from "../api/api.js"
 import { fetchPosts } from "../api/api.js";
 
@@ -81,17 +81,14 @@ const navigate = useNavigate()
     console.log ("editeddata", data)
     console.log ("is this an array?", posts)
 
-  // const newPostArray = posts.data.posts.filter((eachpost) => eachpost._id !== data.post._id)
- 
+  
   const dataArray = [data]
   console.log ("posts", posts)
   console.log (selectpost._id)
-  const index = posts.data.posts.includes(selectpost._id);
+  const index = posts.includes(selectpost._id);
   console.log ("index of _id", index)
   
- // const newArray = posts.data.posts.splice(index, 1, dataArray);
-//  console.log ("newArray", newArray)
- //  setPosts(newArray);
+
    console.log ("posts", posts)
    
    const getPosts = async () => {
@@ -99,7 +96,7 @@ const navigate = useNavigate()
           
           const results = await fetchPosts(tokenNumber)
           console.log (results)
-          setPosts(results);
+          setPosts(results.data.posts);
           
           navigate ("/myposts")
         }

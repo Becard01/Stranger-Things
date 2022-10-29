@@ -1,14 +1,10 @@
 import React, { useState } from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import { addPost } from "../api/api.js"
 import { fetchPosts } from "../api/api.js";
 
 
-
-
-
-
-const Add = ({tokenNumber, usernameString, setPosts}) => {
+const Add = ({tokenNumber, setPosts}) => {
 
 const [item, setItem] = useState ("");
 const [description, setDescription] = useState ("");
@@ -73,45 +69,23 @@ const getPosts = async () => {
           
           const results = await fetchPosts(tokenNumber)
           console.log (results)
-          setPosts(results);
-          results.data.posts.map(array => {
-            console.log (array.isAuthor)
-            if (array.author.username===usernameString){
-             return console.log ("myArray", array)
-             }
-        
-          })
+          setPosts(results.data.posts);
+    
           navigate ("/myposts")
         }
       catch (error) {
         console.error(error);
-    
-      }
-    
+    }
     }
     getPosts()
-    
-
-
-
-
-
-
-
-}
+    }
 catch (error) {
     console.log (error)
     }
-
-
 }
     
 
-
-
-    
-
-    return (
+return (
         <div id="addpostcontainer">
         <div id="addPost">
 
@@ -189,9 +163,6 @@ catch (error) {
         </div>
          
        )
-
-
-
 }
 
 export {Add};

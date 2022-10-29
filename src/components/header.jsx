@@ -1,16 +1,14 @@
-import React, { useState } from "react";
-import {BrowserRouter, Routes, Route, Link, useNavigate } from "react-router-dom";
+import React from "react";
+import {Link, useNavigate } from "react-router-dom";
 import  {gsap} from 'gsap';
 
 
 
 const Header = (props) => {
     const {setHasToken, setUsernameString, setPasswordString, setTokenNumber, 
-     tokenNumber, setPosts} = props;
+     tokenNumber} = props;
     
 const navigate= useNavigate();
-
-console.log (gsap)
 
 const colors = gsap.to('.title', {
     paused: true,

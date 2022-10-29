@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import { addMessage } from "../api/api.js"
-import { fetchPosts } from "../api/api.js";
+import { fetchMessages } from "../api/api.js";
 
 
 
-const Reply = ({tokenNumber, selectmessage, setPosts, usernameString, selectmessageID}) => {
+const Reply = ({tokenNumber, selectmessage, setMessages, selectmessageID}) => {
 
 const [message, setMessage] = useState ("");
 
@@ -18,7 +18,6 @@ const handleSetMessage = (event) => {
     setMessage(newValue);
 }
 
-
 const handleSubmit = async (event) => {
 event.preventDefault();
 
@@ -28,21 +27,20 @@ try{
 const data = await addMessage(tokenNumber, post, selectmessageID)
 console.log (data)
 
-
-const getPosts = async () => {
-    try {
-         const results = await fetchPosts(tokenNumber)
-            console.log (results)
-          setPosts(results);
-         navigate ("/mymessages")
-        }
+const getMessages = async () => {
+  
+    try { 
+          const results = await fetchMessages(tokenNumber)
+          console.log ("results useEffect in Index.js fetchMessages", results)
+          setMessages(results.data.messages);
+          navigate ("/mymessages")
+         }
       catch (error) {
         console.error(error);
-    
-      }
+    }
     
     }
-    getPosts()
+  getMessages()
 
 }
 catch (error) {

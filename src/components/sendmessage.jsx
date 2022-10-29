@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import { addMessage } from "../api/api.js"
 import { fetchPosts } from "../api/api.js";
 

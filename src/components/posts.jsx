@@ -1,54 +1,20 @@
 import React, { useState, useEffect } from "react";
-import {BrowserRouter, Route, Link, useNavigate} from "react-router-dom";
-import {fetchMessages, fetchPosts} from "../api/api.js";
+import {Link, useNavigate} from "react-router-dom";
 import { deletePost } from "../api/api.js";
 
 
 
 const Posts = (props) => {
+  
+const {posts, setSelectPost, tokenNumber } = props
 
-const {posts, myPosts, setSelectPost, tokenNumber, setMessages, setPosts, usernameString,
-messages} = props
 
 const [searchstring, setSearchstring] = useState ("")
-const [renderposts, setRenderposts] = useState (posts.data.posts)
 
+
+const [renderposts, setRenderposts] = useState (posts)
 
 const navigate = useNavigate()
-
-//*****Added a UseEffect here for debugging purposes.  
-//"posts" was not populating after refresh, so tried to getPosts and getMessages with this*/
-
-useEffect(() =>{
-if (tokenNumber){
-    const getPosts = async () => {
-      try {
-            const results = await fetchPosts(tokenNumber)
-            console.log ("useEfect fetchPosts success Post component")
-            setPosts(results);
-        }
-        catch (error) {
-          console.error(error);
-        }
-      }
-  getPosts()
-                }
-  
-  const getMessages = async () => {
-    if (!messages){
-    try { if (tokenNumber){
-          const results = await fetchMessages(tokenNumber)
-          setMessages(results);
-         }}
-      catch (error) {
-        console.error(error);
-    }}
-    
-    }
-  getMessages()
-  
-}, [tokenNumber]); 
-
 
 
 const handleSearch = (event) => {
@@ -56,7 +22,7 @@ const handleSearch = (event) => {
     const inputElement = event.target;
     const newValue = inputElement.value;
     setSearchstring(newValue);
-    const found = posts.data.posts.filter((post) =>{
+    const found = posts.filter((post) =>{
        return (post.title.toLowerCase().includes(`${searchstring}`) || 
        post.description.toLowerCase().includes(`${searchstring}`)|| 
        post.price.toLowerCase().includes(`${searchstring}`)|| 
@@ -67,6 +33,11 @@ const handleSearch = (event) => {
 
     console.log (searchstring)
 }
+
+useEffect(() =>{
+   setRenderposts(posts)
+        
+   }, [posts]); 
 
 function handleSendMessageClick (post)  {
     setSelectPost(post);
@@ -94,11 +65,6 @@ async function handleDeleteClick(postID){
     }
 
 
-
-
-
-console.log ("posts at the time of map", posts.data.posts)
-
 return (
     <div id="posts">
         <div id="postheadercontainer">
@@ -120,7 +86,7 @@ return (
         </div>
 
        
-      { renderposts.map((post) => {
+      {Array.isArray(renderposts) && renderposts.map((post) => {
     
         return (
             

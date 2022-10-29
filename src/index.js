@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import { useState, } from "react";
-import {BrowserRouter, Routes, Route, Link, Navigate } from "react-router-dom";
+import {BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./app.css"
 
 
@@ -23,6 +23,11 @@ import { Reply } from "./components/reply.jsx"
 
 function App() {
 
+  
+
+    
+
+
     const [usernameString, setUsernameString] = useState("","");
     const [passwordString, setPasswordString] = useState ("","");
     const [userExists, setUserExists] = useState (false)
@@ -34,23 +39,36 @@ function App() {
     const [selectpost, setSelectPost]= useState ([])
     const [selectmessage, setSelectMessage]= useState ([])
     const [selectmessageID, setSelectMessageID] = useState("")
+    const [posts, setPosts] = useState([]);
     const [tokenNumber, setTokenNumber] = useState (
       window.localStorage.getItem("tokenNumber") || "");
       
      
-    const [posts, setPosts] = useState([]);
-    
+ 
+      
+
+  
+
+useEffect(() =>{
+
+window.localStorage.setItem("tokenNumber", tokenNumber)
+
+}, [tokenNumber]); 
+
 
 
 useEffect(() =>{
 
-  window.localStorage.setItem("tokenNumber", tokenNumber)
   const getPosts = async () => {
     try {
           
           const results = await fetchPosts(tokenNumber)
-          console.log ("results useEffect in Index.js fetchPosts", results)
-          setPosts(results);
+         
+          
+          setPosts(results.data.posts);
+
+          
+          
            }
       catch (error) {
         console.error(error);
@@ -60,15 +78,19 @@ useEffect(() =>{
     }
 getPosts()
   
+}, [tokenNumber]); 
 
-const getMessages = async () => {
+
+useEffect(() =>{
+
+ const getMessages = async () => {
   
-  try { if (tokenNumber){
+  try { 
         
         const results = await fetchMessages(tokenNumber)
-        console.log ("results useEffect in Index.js fetchMessages", results)
-        setMessages(results);
-       }}
+        
+        setMessages(results.data.messages);
+       }
     catch (error) {
       console.error(error);
   }
@@ -76,10 +98,10 @@ const getMessages = async () => {
   }
 getMessages()
 
-
-
-
 }, [tokenNumber]); 
+
+
+
 
 
 return (
@@ -98,9 +120,11 @@ return (
        setPosts = {setPosts} setMyPosts ={setMyPosts} myPosts = {myPosts} 
        usernameString = {usernameString} messages = {messages}/>}/>
 
+        
       <Route path="/posts" element={<Posts posts = {posts} setPosts = {setPosts} 
         myPosts = {myPosts} setSelectPost= {setSelectPost} tokenNumber= {tokenNumber}
         setMessages = {setMessages} usernameString ={usernameString}/>}/>
+        
 
       <Route path="/login" element={<Login setUsernameString = {setUsernameString} 
         setPasswordString = {setPasswordString}
@@ -123,17 +147,17 @@ return (
 
        <Route path="/successfulreg" element={<Success usernameString = {usernameString}/>}/>
 
-      
+       
       <Route path="/myposts/edit" element={<Edit tokenNumber = {tokenNumber}
        setPosts = {setPosts} setMyPosts ={setMyPosts} myPosts = {myPosts}  
        selectpost = {selectpost} posts = {posts} usernameString = {usernameString} />}/> 
     
       <Route path="/myposts" element={<Myposts posts = {posts} setPosts = {setPosts} 
         myPosts = {myPosts} tokenNumber = {tokenNumber} setSelectPost= {setSelectPost}/>}/>
-
+       
 
       <Route path="mymessages/reply" element={<Reply tokenNumber = {tokenNumber} 
-       selectmessage = {selectmessage} setPosts ={setPosts} usernameString = {usernameString}
+       selectmessage = {selectmessage} setMessages ={setMessages} usernameString = {usernameString}
        selectmessageID = {selectmessageID} />}/>
 
        <Route path="mymessages/sendmessage" element={<Sendmessage tokenNumber = {tokenNumber} 
@@ -153,12 +177,12 @@ return (
       
        
     );
+
+
   
   }
   
- 
-
-  ReactDOM.render(
+ ReactDOM.render(
   <BrowserRouter>
   <App/>
   </BrowserRouter>

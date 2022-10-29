@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {Link, useNavigate} from "react-router-dom";
 import { fetchPosts } from "../api/api";
 import { deletePost } from "../api/api";
@@ -6,7 +6,7 @@ import { deletePost } from "../api/api";
 
 const Myposts = (props) => {
 
-const {posts, myPosts, tokenNumber, setSelectPost, setPosts } = props
+const {posts, tokenNumber, setSelectPost, setPosts } = props
 
 const [mypostsearchstring, setMyPostSearchstring] = useState ("")
 
@@ -17,11 +17,6 @@ const [editlocation, setEditLocation] = useState ("");
 const [editwilldeliver, setEditWilldeliver] = useState (false);
 
 const navigate = useNavigate()
-
-
-
-
-
 
 
 
@@ -39,7 +34,7 @@ async function handleDeleteClick(postID){
         const results = await deletePost(tokenNumber, postID)
         console.log (results)
        const data =  await fetchPosts(tokenNumber)
-       setPosts (data)
+       setPosts (data.data.posts)
 
         navigate ("/myposts")
          }
@@ -52,15 +47,10 @@ async function handleDeleteClick(postID){
 
 
 
-
-
-
-
-
 return (
     <div id="posts">
         <div className="postheadercontainer">
-            <div classname="postheaderbox">
+            <div className="postheaderbox">
                
                 
 
@@ -73,7 +63,7 @@ return (
         </div>
 
 
-      {posts.data.posts.map((post) => {
+      {posts.map((post) => {
     
         return (
             

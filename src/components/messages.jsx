@@ -1,32 +1,22 @@
-import React, { useState, useEffect } from "react";
-import {Link, useNavigate} from "react-router-dom";
-import {addMessage} from "../api/api.js"
-import { fetchMessages } from "../api/api.js";
-
-
+import React from "react";
+import {useNavigate} from "react-router-dom";
 
 
 
 const Messages = (props) => {
 
-const {messages, setMessages, setMessagesToMe, setMessagesFromMe, tokenNumber, usernameString, 
-setSelectMessage, setSelectMessageID} = props
-
+const {messages, usernameString, setSelectMessage, setSelectMessageID} = props
 
 
 const navigate= useNavigate()
 
 
-
-const messagesToMe = messages.data.messages.filter((msg) => {
+const messagesToMe = messages.filter((msg) => {
        return (msg.fromUser.username!==usernameString)});
-console.log ("messagesToMe", messagesToMe);
 
-const messagesFromMe = messages.data.messages.filter((msg) => {
+
+const messagesFromMe = messages.filter((msg) => {
     return (msg.fromUser.username===usernameString)});
-console.log ("messagesFromMe", messagesFromMe);
-
-
 
 
 function handleSendMessageClick(messageID, message){
@@ -34,9 +24,6 @@ function handleSendMessageClick(messageID, message){
     setSelectMessageID(messageID)
    navigate("./reply");
     }
-
-
-
 
 
 return (
@@ -111,22 +98,9 @@ return (
         )
         }
         </div>
-
-
-
-    
-
-        
-
-
-        
-    
-
 </>
 
-    
-)
-    
-}
+    )
+    }
 
 export {Messages};
