@@ -27,8 +27,6 @@ const handleSetMessage = (event) => {
 const handleSubmit = async (event) => {
 event.preventDefault();
 
-
-
 const post = {content: message}
 
 try{
@@ -53,13 +51,9 @@ const getPosts = async () => {
         }
       catch (error) {
         console.error(error);
-    
-      }
-    
-    }
-
-    getPosts()
-
+        }
+        }
+        getPosts()
 }
 catch (error) {
     console.log (error)

@@ -56,13 +56,6 @@ setWilldeliver(newValue);
 const handleSubmit = async (event) => {
 event.preventDefault();
 
-if (willdeliver === "checked") {
-    setWilldeliver(true)
-    }
-else{
-    setWilldeliver (false)
-}
-
 const post = {title: item,
 description: description,
 price: price,

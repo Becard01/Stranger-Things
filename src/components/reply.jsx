@@ -5,9 +5,6 @@ import { fetchPosts } from "../api/api.js";
 
 
 
-
-
-
 const Reply = ({tokenNumber, selectmessage, setPosts, usernameString, selectmessageID}) => {
 
 const [message, setMessage] = useState ("");
@@ -28,7 +25,7 @@ event.preventDefault();
 const post = {content: message}
 
 try{
-const data = await addMessage(tokenNumber, selectmessage, selectmessageID)
+const data = await addMessage(tokenNumber, post, selectmessageID)
 console.log (data)
 
 
@@ -37,7 +34,7 @@ const getPosts = async () => {
          const results = await fetchPosts(tokenNumber)
             console.log (results)
           setPosts(results);
-         navigate ("/myposts")
+         navigate ("/mymessages")
         }
       catch (error) {
         console.error(error);
@@ -89,9 +86,7 @@ return (
         </fieldset>
       
        <button id="sendMessageButton">Submit</button>
-         </form>
-
-         
+        </form>
         </div>
         </div>
         </>

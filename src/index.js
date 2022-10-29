@@ -113,9 +113,9 @@ return (
         setPasswordString = {setPasswordString} setUserExists = {setUserExists} 
         usernameString= {usernameString} passwordString = {passwordString} />}/>
        
-       {//<Route path="/" element={tokenNumber?<Navigate replace to="/posts" />:
-       //<Navigate replace to="/login" />} />
-        }
+       <Route path="/" element={tokenNumber?<Navigate replace to="/login" />:
+      <Navigate replace to="/login" />} />
+        
 
      
 

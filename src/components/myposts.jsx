@@ -23,14 +23,7 @@ const navigate = useNavigate()
 
 
 
-const handleSearch = (event) => {
-    event.preventDefault();
-    const inputElement = event.target;
-    const newValue = inputElement.value;
-    setMyPostSearchstring(newValue);
 
-    console.log (mypostsearchstring)
-}
 
 function handleEditClick(post){
     setSelectPost (post)
@@ -66,16 +59,10 @@ async function handleDeleteClick(postID){
 
 return (
     <div id="posts">
-        <div id="postheadercontainer">
-            <div id="postheaderbox">
+        <div className="postheadercontainer">
+            <div classname="postheaderbox">
                
-                <span>
-                <input id = "search" 
-                type = "text"
-                placeholder="Search"
-                value={mypostsearchstring}
-                onChange={handleSearch}/>
-                </span>
+                
 
                 <button id="addpost" ><Link to="/posts/add" id="addlink">ADD POST</Link></button>
                 
